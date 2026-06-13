@@ -1,0 +1,1143 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Evaluador de Ideas de Negocio - ABC Training</title>
+    <!-- Tailwind CSS -->
+    <script src="https://cdn.tailwindcss.com"></script>
+    <!-- Google Fonts: Inter & Playfair -->
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700;800&family=Playfair+Display:ital,wght@0,600;0,700;1,400&display=swap" rel="stylesheet">
+    <!-- Font Awesome Icons -->
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+
+    <script>
+        tailwind.config = {
+            theme: {
+                extend: {
+                    colors: {
+                        navy: {
+                            50: '#f4f6f9',
+                            100: '#e8ecf3',
+                            800: '#0f1e36',
+                            900: '#0b0f19',
+                            950: '#05070c',
+                        },
+                        gold: {
+                            300: '#dfc59f',
+                            400: '#d4af37',
+                            500: '#c5a880',
+                            600: '#91713b',
+                        }
+                    },
+                    fontFamily: {
+                        sans: ['Inter', 'sans-serif'],
+                        serif: ['Playfair Display', 'serif'],
+                    }
+                }
+            }
+        }
+    </script>
+    <style>
+        .step-panel {
+            display: none;
+        }
+        .step-panel.active {
+            display: block;
+        }
+        /* Barra de desplazamiento personalizada estética para las tablas */
+        .custom-scroll::-webkit-scrollbar {
+            width: 6px;
+            height: 6px;
+        }
+        .custom-scroll::-webkit-scrollbar-track {
+            background: rgba(255, 255, 255, 0.03);
+        }
+        .custom-scroll::-webkit-scrollbar-thumb {
+            background: #c5a880;
+            border-radius: 4px;
+        }
+    </style>
+</head>
+<body class="bg-navy-950 text-slate-200 font-sans min-h-screen flex flex-col justify-between">
+
+    <!-- Header Principal -->
+    <header class="bg-navy-900 border-b border-gold-500/20 py-4 px-6 sticky top-0 z-40 shadow-xl">
+        <div class="max-w-7xl mx-auto flex flex-col md:flex-row justify-between items-center gap-4">
+            <div class="flex items-center gap-3">
+                <div class="bg-gradient-to-br from-gold-400 to-gold-600 p-2 rounded-lg text-navy-950">
+                    <i class="fa-solid fa-graduation-cap text-xl"></i>
+                </div>
+                <div>
+                    <h1 class="font-serif text-lg md:text-xl font-bold tracking-wide text-white">ABC Training</h1>
+                    <p class="text-[10px] uppercase tracking-wider text-gold-400 font-semibold">Cátedra de Plan de Negocios</p>
+                </div>
+            </div>
+            
+            <!-- Indicador Gráfico de Pasos (Stepper) -->
+            <div class="flex items-center gap-2 text-xs font-semibold" id="stepper-indicators">
+                <span class="step-dot w-8 h-8 rounded-full flex items-center justify-center bg-gold-500 text-navy-950 font-bold shadow-lg shadow-gold-500/20" id="dot-0">1</span>
+                <div class="w-8 h-[2px] bg-slate-800" id="line-1"></div>
+                <span class="step-dot w-8 h-8 rounded-full flex items-center justify-center bg-navy-800 text-slate-500" id="dot-1">2</span>
+                <div class="w-8 h-[2px] bg-slate-800" id="line-2"></div>
+                <span class="step-dot w-8 h-8 rounded-full flex items-center justify-center bg-navy-800 text-slate-500" id="dot-2">3</span>
+                <div class="w-8 h-[2px] bg-slate-800" id="line-3"></div>
+                <span class="step-dot w-8 h-8 rounded-full flex items-center justify-center bg-navy-800 text-slate-500" id="dot-3">4</span>
+                <div class="w-8 h-[2px] bg-slate-800" id="line-4"></div>
+                <span class="step-dot w-8 h-8 rounded-full flex items-center justify-center bg-navy-800 text-slate-500" id="dot-4">5</span>
+            </div>
+        </div>
+    </header>
+
+    <main class="flex-grow max-w-7xl w-full mx-auto p-4 md:p-8 flex flex-col justify-center">
+        
+        <!-- ================= PANEL 0: BIENVENIDA Y REGISTRO ================= -->
+        <section id="panel-0" class="step-panel active max-w-2xl mx-auto w-full">
+            <div class="bg-navy-900 border border-gold-500/15 rounded-2xl p-6 md:p-10 shadow-2xl relative overflow-hidden">
+                <div class="absolute top-0 right-0 w-32 h-32 bg-gold-500/5 rounded-full blur-2xl"></div>
+                
+                <div class="text-center mb-8">
+                    <span class="bg-gold-500/10 text-gold-400 text-xs uppercase px-4 py-1.5 rounded-full font-bold tracking-widest border border-gold-500/20">HERRAMIENTA ACADÉMICA</span>
+                    <h2 class="font-serif text-3xl md:text-5xl font-bold text-white mt-4 tracking-tight leading-tight">Evaluador de <span class="text-gold-400">Ideas de Negocio</span></h2>
+                    
+                    <!-- Créditos Académicos -->
+                    <div class="mt-6 border-y border-slate-800 py-4 flex flex-col gap-2">
+                        <p class="text-slate-400 text-sm">Elaborado por: <strong class="text-slate-100">ABC training</strong></p>
+                        <p class="text-slate-400 text-sm">Dirigido por: <strong class="text-gold-400">Lic. Victor Elias Sellis Zeballos</strong></p>
+                    </div>
+                </div>
+
+                <div class="space-y-4">
+                    <div class="grid grid-cols-1 sm:grid-cols-2 gap-4">
+                        <div>
+                            <label class="block text-xs font-bold uppercase text-slate-400 mb-2 tracking-wider">Nombre del Estudiante</label>
+                            <input type="text" id="student-name" class="w-full bg-navy-950 border border-slate-800 focus:border-gold-500 focus:ring-1 focus:ring-gold-500 rounded-xl px-4 py-3 text-slate-100 placeholder-slate-600 transition-all text-sm font-medium" placeholder="Ej: Juan Carlos">
+                        </div>
+                        <div>
+                            <label class="block text-xs font-bold uppercase text-slate-400 mb-2 tracking-wider">Apellido del Estudiante</label>
+                            <input type="text" id="student-lastname" class="w-full bg-navy-950 border border-slate-800 focus:border-gold-500 focus:ring-1 focus:ring-gold-500 rounded-xl px-4 py-3 text-slate-100 placeholder-slate-600 transition-all text-sm font-medium" placeholder="Ej: Pérez Gómez">
+                        </div>
+                    </div>
+                    
+                    <div id="welcome-error" class="hidden text-rose-400 text-xs font-semibold bg-rose-500/10 p-3 rounded-lg border border-rose-500/20 flex items-center gap-2">
+                        <i class="fa-solid fa-circle-exclamation text-sm"></i>
+                        <span>Por favor, ingresa tu nombre y apellido para comenzar con el taller.</span>
+                    </div>
+
+                    <button type="button" onclick="goToStep(1)" class="w-full bg-gradient-to-r from-gold-500 to-gold-600 hover:from-gold-600 hover:to-gold-700 text-navy-950 font-bold py-3.5 px-6 rounded-xl text-sm transition-all duration-300 shadow-lg shadow-gold-500/20 flex items-center justify-center gap-2 mt-6 uppercase tracking-wider">
+                        Comenzar Taller <i class="fa-solid fa-arrow-right"></i>
+                    </button>
+                </div>
+            </div>
+        </section>
+
+        <!-- ================= PANEL 1: LLUVIA DE IDEAS (BRAINSTORMING) ================= -->
+        <section id="panel-1" class="step-panel max-w-5xl mx-auto w-full">
+            <div class="bg-navy-900 border border-gold-500/15 rounded-2xl p-6 shadow-2xl">
+                <div class="flex flex-col md:flex-row justify-between md:items-center gap-4 mb-6 pb-4 border-b border-slate-800">
+                    <div>
+                        <span class="text-xs uppercase tracking-widest text-gold-400 font-bold"><i class="fa-solid fa-lightbulb mr-1"></i> Fase 1</span>
+                        <h2 class="font-serif text-2xl md:text-3xl font-bold text-white">Lluvia de Ideas Guiada</h2>
+                        <p class="text-xs text-slate-400 mt-1">Completa las siguientes ideas basadas en sugerencias metodológicas de la cátedra.</p>
+                    </div>
+                    <div class="bg-navy-950 px-4 py-2 rounded-xl border border-slate-800 text-xs">
+                        <span class="text-slate-400">Estudiante:</span> <strong id="header-student-name" class="text-gold-400">---</strong>
+                    </div>
+                </div>
+
+                <!-- Entradas de lluvia de ideas guiadas -->
+                <div class="grid grid-cols-1 md:grid-cols-2 gap-4" id="brainstorm-container">
+                    <!-- Idea 1 & 2: Megatendencias -->
+                    <div class="bg-navy-950 p-4 rounded-xl border border-slate-800 flex flex-col gap-3">
+                        <div class="flex items-center gap-2 text-gold-400 font-bold text-xs uppercase tracking-wider">
+                            <i class="fa-solid fa-chart-line text-sm"></i> Megatendencias (Sostenibilidad, IA, Tecnología)
+                        </div>
+                        <div class="space-y-2">
+                            <input type="text" id="idea-1" class="brain-input w-full bg-navy-900 border border-slate-800 focus:border-gold-500 rounded-lg px-3 py-2 text-xs placeholder-slate-600 font-medium" placeholder="Idea 1: Basado en sostenibilidad o IA">
+                            <input type="text" id="idea-2" class="brain-input w-full bg-navy-900 border border-slate-800 focus:border-gold-500 rounded-lg px-3 py-2 text-xs placeholder-slate-600 font-medium" placeholder="Idea 2: Basado en tecnología emergente o automatización">
+                        </div>
+                    </div>
+
+                    <!-- Idea 3 & 4: Habilidades -->
+                    <div class="bg-navy-950 p-4 rounded-xl border border-slate-800 flex flex-col gap-3">
+                        <div class="flex items-center gap-2 text-gold-400 font-bold text-xs uppercase tracking-wider">
+                            <i class="fa-solid fa-user-gear text-sm"></i> Habilidades y Saberes (Tus talentos, estudios)
+                        </div>
+                        <div class="space-y-2">
+                            <input type="text" id="idea-3" class="brain-input w-full bg-navy-900 border border-slate-800 focus:border-gold-500 rounded-lg px-3 py-2 text-xs placeholder-slate-600 font-medium" placeholder="Idea 3: Aprovechando tu conocimiento técnico o carrera">
+                            <input type="text" id="idea-4" class="brain-input w-full bg-navy-900 border border-slate-800 focus:border-gold-500 rounded-lg px-3 py-2 text-xs placeholder-slate-600 font-medium" placeholder="Idea 4: Derivado de un pasatiempo o destreza única">
+                        </div>
+                    </div>
+
+                    <!-- Idea 5 & 6: Puntos de Dolor -->
+                    <div class="bg-navy-950 p-4 rounded-xl border border-slate-800 flex flex-col gap-3">
+                        <div class="flex items-center gap-2 text-gold-400 font-bold text-xs uppercase tracking-wider">
+                            <i class="fa-solid fa-face-frown text-sm"></i> Puntos de Dolor (Problemas cotidianos)
+                        </div>
+                        <div class="space-y-2">
+                            <input type="text" id="idea-5" class="brain-input w-full bg-navy-900 border border-slate-800 focus:border-gold-500 rounded-lg px-3 py-2 text-xs placeholder-slate-600 font-medium" placeholder="Idea 5: Solucionar una frustración común del entorno">
+                            <input type="text" id="idea-6" class="brain-input w-full bg-navy-900 border border-slate-800 focus:border-gold-500 rounded-lg px-3 py-2 text-xs placeholder-slate-600 font-medium" placeholder="Idea 6: Reparar una ineficiencia en servicios actuales">
+                        </div>
+                    </div>
+
+                    <!-- Idea 7 & 8: Optimización de Procesos -->
+                    <div class="bg-navy-950 p-4 rounded-xl border border-slate-800 flex flex-col gap-3">
+                        <div class="flex items-center gap-2 text-gold-400 font-bold text-xs uppercase tracking-wider">
+                            <i class="fa-solid fa-arrows-spin text-sm"></i> Optimización de Procesos (Mejorar lo existente)
+                        </div>
+                        <div class="space-y-2">
+                            <input type="text" id="idea-7" class="brain-input w-full bg-navy-900 border border-slate-800 focus:border-gold-500 rounded-lg px-3 py-2 text-xs placeholder-slate-600 font-medium" placeholder="Idea 7: Hacer un negocio tradicional más rápido o accesible">
+                            <input type="text" id="idea-8" class="brain-input w-full bg-navy-900 border border-slate-800 focus:border-gold-500 rounded-lg px-3 py-2 text-xs placeholder-slate-600 font-medium" placeholder="Idea 8: Rediseño ecológico o local de un producto exitoso">
+                        </div>
+                    </div>
+
+                    <!-- Idea 9, 10, 11, 12: Libre Elección -->
+                    <div class="bg-navy-950 p-4 rounded-xl border border-slate-800 flex flex-col gap-3 md:col-span-2">
+                        <div class="flex items-center gap-2 text-gold-400 font-bold text-xs uppercase tracking-wider">
+                            <i class="fa-solid fa-wand-magic-sparkles text-sm"></i> Libre Elección (Escoge libremente lo que tú quieras)
+                        </div>
+                        <div class="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-4 gap-3">
+                            <input type="text" id="idea-9" class="brain-input bg-navy-900 border border-slate-800 focus:border-gold-500 rounded-lg px-3 py-2 text-xs placeholder-slate-600 font-medium" placeholder="Idea 9: Tu elección">
+                            <input type="text" id="idea-10" class="brain-input bg-navy-900 border border-slate-800 focus:border-gold-500 rounded-lg px-3 py-2 text-xs placeholder-slate-600 font-medium" placeholder="Idea 10: Tu elección">
+                            <input type="text" id="idea-11" class="brain-input bg-navy-900 border border-slate-800 focus:border-gold-500 rounded-lg px-3 py-2 text-xs placeholder-slate-600 font-medium" placeholder="Idea 11: Tu elección">
+                            <input type="text" id="idea-12" class="brain-input bg-navy-900 border border-slate-800 focus:border-gold-500 rounded-lg px-3 py-2 text-xs placeholder-slate-600 font-medium" placeholder="Idea 12: Tu elección">
+                        </div>
+                    </div>
+                </div>
+
+                <div id="brainstorm-error" class="hidden mt-4 text-rose-400 text-xs font-semibold bg-rose-500/10 p-3 rounded-lg border border-rose-500/20 flex items-center gap-2">
+                    <i class="fa-solid fa-circle-exclamation"></i>
+                    <span>Por favor, escribe al menos 5 ideas para poder avanzar a la fase de filtrado.</span>
+                </div>
+
+                <div class="flex justify-between mt-6">
+                    <button type="button" onclick="goToStep(0)" class="bg-navy-800 hover:bg-navy-700 text-slate-300 font-bold py-2.5 px-5 rounded-lg text-xs transition duration-200">
+                        <i class="fa-solid fa-arrow-left mr-1"></i> Atrás
+                    </button>
+                    <button type="button" onclick="goToStep(2)" class="bg-gold-500 hover:bg-gold-600 text-navy-950 font-bold py-2.5 px-6 rounded-lg text-xs transition duration-200 flex items-center gap-2 shadow-md shadow-gold-500/10">
+                        Siguiente: Macrofiltro <i class="fa-solid fa-arrow-right"></i>
+                    </button>
+                </div>
+            </div>
+        </section>
+
+        <!-- ================= PANEL 2: EL MACROFILTRO (EXCLUSIÓN BINARIA) ================= -->
+        <section id="panel-2" class="step-panel max-w-6xl mx-auto w-full">
+            <div class="bg-navy-900 border border-gold-500/15 rounded-2xl p-6 shadow-2xl">
+                <div class="flex flex-col md:flex-row justify-between md:items-center gap-4 mb-6 pb-4 border-b border-slate-800">
+                    <div>
+                        <span class="text-xs uppercase tracking-widest text-gold-400 font-bold"><i class="fa-solid fa-filter mr-1"></i> Fase 2</span>
+                        <h2 class="font-serif text-2xl md:text-3xl font-bold text-white">El Macrofiltro de Selección</h2>
+                        <p class="text-xs text-slate-400 mt-1">Evalúa tus propuestas con respuestas binarias (Sí/No). <strong class="text-gold-400">Las mejores 5 ideas</strong> con mayor cantidad de respuestas "SÍ" pasarán automáticamente a la siguiente fase.</p>
+                    </div>
+                </div>
+
+                <!-- Tabla de Macrofiltro -->
+                <div class="overflow-x-auto custom-scroll mb-4 border border-slate-800 rounded-xl">
+                    <table class="w-full text-left text-xs md:text-sm border-collapse bg-navy-950">
+                        <thead>
+                            <tr class="bg-navy-900 border-b border-slate-800 text-slate-300">
+                                <th class="p-4 font-semibold w-[35%]">Idea de Negocio</th>
+                                <th class="p-4 text-center font-semibold w-[13%]">1. ¿Existe necesidad?</th>
+                                <th class="p-4 text-center font-semibold w-[13%]">2. ¿Hay mercado?</th>
+                                <th class="p-4 text-center font-semibold w-[13%]">3. ¿Saber técnico?</th>
+                                <th class="p-4 text-center font-semibold w-[13%]">4. ¿Es legal/ético?</th>
+                                <th class="p-4 text-center font-semibold w-[13%]">Veredicto (Top 5)</th>
+                            </tr>
+                        </thead>
+                        <tbody id="macrofilter-tbody" class="divide-y divide-slate-800 text-slate-300">
+                            <!-- Filas dinámicas cargadas por JavaScript -->
+                        </tbody>
+                    </table>
+                </div>
+
+                <div id="macrofilter-error" class="hidden text-rose-400 text-xs font-semibold bg-rose-500/10 p-3 rounded-lg border border-rose-500/20 flex items-center gap-2 mb-4">
+                    <i class="fa-solid fa-circle-exclamation"></i>
+                    <span>Debe existir al menos 1 idea guardada para proceder al Microfiltro. Edita los valores para continuar.</span>
+                </div>
+
+                <div class="flex justify-between mt-6">
+                    <button type="button" onclick="goToStep(1)" class="bg-navy-800 hover:bg-navy-700 text-slate-300 font-bold py-2.5 px-5 rounded-lg text-xs transition duration-200">
+                        <i class="fa-solid fa-arrow-left mr-1"></i> Atrás
+                    </button>
+                    <button type="button" onclick="goToStep(3)" class="bg-gold-500 hover:bg-gold-600 text-navy-950 font-bold py-2.5 px-6 rounded-lg text-xs transition duration-200 flex items-center gap-2 shadow-md shadow-gold-500/10">
+                        Siguiente: Microfiltro <i class="fa-solid fa-arrow-right"></i>
+                    </button>
+                </div>
+            </div>
+        </section>
+
+        <!-- ================= PANEL 3: EL MICROFILTRO (PONDERACIÓN CUALITATIVA) ================= -->
+        <section id="panel-3" class="step-panel max-w-6xl mx-auto w-full">
+            <div class="bg-navy-900 border border-gold-500/15 rounded-2xl p-6 shadow-2xl">
+                <div class="flex flex-col md:flex-row justify-between md:items-center gap-4 mb-6 pb-4 border-b border-slate-800">
+                    <div>
+                        <span class="text-xs uppercase tracking-widest text-gold-400 font-bold"><i class="fa-solid fa-calculator mr-1"></i> Fase 3</span>
+                        <h2 class="font-serif text-2xl md:text-3xl font-bold text-white">Matriz del Microfiltro</h2>
+                        <p class="text-xs text-slate-400 mt-1">Califica las mejores 5 ideas finalistas de <strong>1 (Deficiente)</strong> a <strong>5 (Excelente)</strong> según las variables críticas del negocio.</p>
+                    </div>
+                </div>
+
+                <!-- Tabla del Microfiltro -->
+                <div class="overflow-x-auto custom-scroll mb-4 border border-slate-800 rounded-xl">
+                    <table class="w-full text-left text-xs md:text-sm border-collapse bg-navy-950">
+                        <thead>
+                            <tr class="bg-navy-900 border-b border-slate-800 text-slate-300">
+                                <th class="p-3 font-semibold w-[35%]">Criterios Clave de Éxito</th>
+                                <th class="p-3 text-center font-semibold w-[10%]">Peso (%)</th>
+                                <th class="p-3 text-center font-semibold idea-col-header bg-navy-900/40 w-[11%]" id="micro-header-0">Idea A</th>
+                                <th class="p-3 text-center font-semibold idea-col-header w-[11%]" id="micro-header-1">Idea B</th>
+                                <th class="p-3 text-center font-semibold idea-col-header bg-navy-900/40 w-[11%]" id="micro-header-2">Idea C</th>
+                                <th class="p-3 text-center font-semibold idea-col-header w-[11%]" id="micro-header-3">Idea D</th>
+                                <th class="p-3 text-center font-semibold idea-col-header bg-navy-900/40 w-[11%]" id="micro-header-4">Idea E</th>
+                            </tr>
+                        </thead>
+                        <tbody id="microfilter-tbody-rows" class="divide-y divide-slate-800 text-slate-300">
+                            <!-- Criterio 1 -->
+                            <tr data-crit="0">
+                                <td class="p-3 font-medium">1. Nivel de innovación y diferenciación real en el mercado</td>
+                                <td class="p-3 text-center text-gold-400 font-bold">20%</td>
+                                <td class="p-3 text-center cell-input bg-navy-900/20" id="cell-0-0"></td>
+                                <td class="p-3 text-center cell-input" id="cell-0-1"></td>
+                                <td class="p-3 text-center cell-input bg-navy-900/20" id="cell-0-2"></td>
+                                <td class="p-3 text-center cell-input" id="cell-0-3"></td>
+                                <td class="p-3 text-center cell-input bg-navy-900/20" id="cell-0-4"></td>
+                            </tr>
+                            <!-- Criterio 2 -->
+                            <tr data-crit="1">
+                                <td class="p-3 font-medium">2. Know-how y competencias críticas del equipo fundador</td>
+                                <td class="p-3 text-center text-gold-400 font-bold">20%</td>
+                                <td class="p-3 text-center cell-input bg-navy-900/20" id="cell-1-0"></td>
+                                <td class="p-3 text-center cell-input" id="cell-1-1"></td>
+                                <td class="p-3 text-center cell-input bg-navy-900/20" id="cell-1-2"></td>
+                                <td class="p-3 text-center cell-input" id="cell-1-3"></td>
+                                <td class="p-3 text-center cell-input bg-navy-900/20" id="cell-1-4"></td>
+                            </tr>
+                            <!-- Criterio 3 -->
+                            <tr data-crit="2">
+                                <td class="p-3 font-medium">3. Facilidad de acceso y captación de clientes potenciales</td>
+                                <td class="p-3 text-center text-gold-400 font-bold">25%</td>
+                                <td class="p-3 text-center cell-input bg-navy-900/20" id="cell-2-0"></td>
+                                <td class="p-3 text-center cell-input" id="cell-2-1"></td>
+                                <td class="p-3 text-center cell-input bg-navy-900/20" id="cell-2-2"></td>
+                                <td class="p-3 text-center cell-input" id="cell-2-3"></td>
+                                <td class="p-3 text-center cell-input bg-navy-900/20" id="cell-2-4"></td>
+                            </tr>
+                            <!-- Criterio 4 -->
+                            <tr data-crit="3">
+                                <td class="p-3 font-medium">4. Baja inversión requerida para el capital inicial</td>
+                                <td class="p-3 text-center text-gold-400 font-bold">15%</td>
+                                <td class="p-3 text-center cell-input bg-navy-900/20" id="cell-3-0"></td>
+                                <td class="p-3 text-center cell-input" id="cell-3-1"></td>
+                                <td class="p-3 text-center cell-input bg-navy-900/20" id="cell-3-2"></td>
+                                <td class="p-3 text-center cell-input" id="cell-3-3"></td>
+                                <td class="p-3 text-center cell-input bg-navy-900/20" id="cell-3-4"></td>
+                            </tr>
+                            <!-- Criterio 5 -->
+                            <tr data-crit="4">
+                                <td class="p-3 font-medium">5. Escalabilidad comercial y potencial de crecimiento</td>
+                                <td class="p-3 text-center text-gold-400 font-bold">20%</td>
+                                <td class="p-3 text-center cell-input bg-navy-900/20" id="cell-4-0"></td>
+                                <td class="p-3 text-center cell-input" id="cell-4-1"></td>
+                                <td class="p-3 text-center cell-input bg-navy-900/20" id="cell-4-2"></td>
+                                <td class="p-3 text-center cell-input" id="cell-4-3"></td>
+                                <td class="p-3 text-center cell-input bg-navy-900/20" id="cell-4-4"></td>
+                            </tr>
+                            <!-- Totales -->
+                            <tr class="bg-navy-950 font-bold text-slate-200">
+                                <td class="p-3">PUNTUACIÓN FINAL PONDERADA:</td>
+                                <td class="p-3 text-center text-gold-400">100%</td>
+                                <td class="p-3 text-center bg-navy-900/60 font-extrabold text-base" id="total-score-0">-</td>
+                                <td class="p-3 text-center font-extrabold text-base" id="total-score-1">-</td>
+                                <td class="p-3 text-center bg-navy-900/60 font-extrabold text-base" id="total-score-2">-</td>
+                                <td class="p-3 text-center font-extrabold text-base" id="total-score-3">-</td>
+                                <td class="p-3 text-center bg-navy-900/60 font-extrabold text-base" id="total-score-4">-</td>
+                            </tr>
+                        </tbody>
+                    </table>
+                </div>
+
+                <div class="flex justify-between mt-6">
+                    <button type="button" onclick="goToStep(2)" class="bg-navy-800 hover:bg-navy-700 text-slate-300 font-bold py-2.5 px-5 rounded-lg text-xs transition duration-200">
+                        <i class="fa-solid fa-arrow-left mr-1"></i> Atrás
+                    </button>
+                    <button type="button" onclick="goToStep(4)" class="bg-gold-500 hover:bg-gold-600 text-navy-950 font-bold py-2.5 px-6 rounded-lg text-xs transition duration-200 flex items-center gap-2 shadow-md shadow-gold-500/10">
+                        Siguiente: Idea Ganadora <i class="fa-solid fa-arrow-right"></i>
+                    </button>
+                </div>
+            </div>
+        </section>
+
+        <!-- ================= PANEL 4: IDEA GANADORA & CONCEPTUALIZACIÓN ================= -->
+        <section id="panel-4" class="step-panel max-w-5xl mx-auto w-full">
+            <div class="bg-navy-900 border border-gold-500/15 rounded-2xl p-6 shadow-2xl">
+                
+                <!-- Encabezado de Trofeo -->
+                <div class="text-center mb-8 relative py-4">
+                    <div class="absolute -inset-1 rounded-full bg-gold-400 blur opacity-10 animate-pulse"></div>
+                    <div class="relative bg-navy-950 text-gold-400 w-20 h-20 rounded-full flex items-center justify-center text-4xl shadow-xl border border-gold-500/30 mx-auto mb-4">
+                        <i class="fa-solid fa-trophy"></i>
+                    </div>
+                    <span class="text-xs uppercase tracking-widest text-gold-400 font-bold">La Alternativa de Mayor Potencial</span>
+                    <h2 class="font-serif text-3xl md:text-4xl font-bold text-white mt-2">¡Idea Ganadora Seleccionada!</h2>
+                    
+                    <!-- Tarjeta de Idea Ganadora -->
+                    <div class="bg-navy-950/60 max-w-2xl mx-auto rounded-2xl border-2 border-gold-500/30 p-5 mt-4 shadow-xl">
+                        <h3 id="winner-title-label" class="font-serif text-xl md:text-2xl text-gold-300 font-bold tracking-normal italic">
+                            "Nombre de la Idea Ganadora"
+                        </h3>
+                        <p class="text-[11px] text-slate-400 mt-2 uppercase tracking-widest font-semibold" id="winner-subtitle-score">
+                            Puntuación Ponderada: 0.00
+                        </p>
+                    </div>
+                </div>
+
+                <!-- Taller de Formulación en vivo -->
+                <div class="grid grid-cols-1 lg:grid-cols-2 gap-6 w-full mb-8">
+                    <!-- Instrucciones -->
+                    <div class="bg-navy-950 p-5 rounded-xl border border-slate-800">
+                        <h4 class="font-bold text-gold-400 text-sm mb-3 uppercase tracking-wider">
+                            <i class="fa-solid fa-file-invoice mr-2"></i>Sugerencias de Formulación
+                        </h4>
+                        <p class="text-xs text-slate-300 leading-relaxed mb-4">
+                            Una vez que has validado la viabilidad cuantitativa de tu idea con el Microfiltro, es momento de transformarla en un **Concepto de Negocio**. Para ello, redacta tu hipótesis basándote en los siguientes pilares:
+                        </p>
+                        <div class="space-y-3 text-xs text-slate-300">
+                            <div class="bg-navy-900 p-2.5 rounded border border-slate-800">
+                                <strong class="text-gold-300">1. Target de Cliente:</strong> ¿Quién es el nicho específico de clientes? (Ej: Jóvenes profesionales de 25-35 años que teletrabajan).
+                            </div>
+                            <div class="bg-navy-900 p-2.5 rounded border border-slate-800">
+                                <strong class="text-gold-300">2. El Dolor:</strong> ¿Qué frustración o vacío estás solucionando? (Ej: Falta de tiempo para comer sano o cocinar a diario).
+                            </div>
+                            <div class="bg-navy-900 p-2.5 rounded border border-slate-800">
+                                <strong class="text-gold-300">3. Solución & Diferenciación:</strong> ¿Qué ofreces y por qué te preferirán antes que a otros? (Ej: Suscripción de menús orgánicos semanales a precio accesible).
+                            </div>
+                        </div>
+                    </div>
+
+                    <!-- Inputs de Redacción -->
+                    <div class="bg-navy-950 p-5 rounded-xl border border-gold-500/10 flex flex-col justify-between">
+                        <div>
+                            <h4 class="font-bold text-white text-sm mb-2 uppercase tracking-wider">
+                                <i class="fa-solid fa-pen-to-square mr-2 text-gold-400"></i>Redacción del Concepto Final
+                            </h4>
+                            <p class="text-[11px] text-slate-400 mb-4">Completa el taller redactando el enunciado de tu propuesta:</p>
+                            
+                            <div class="space-y-3">
+                                <div>
+                                    <label class="block text-[10px] text-slate-400 mb-1 uppercase font-semibold">¿Para quién? (Cliente / Target)</label>
+                                    <input id="workshop-target" type="text" oninput="updateConceptPitch()" class="w-full bg-navy-900 border border-slate-800 focus:border-gold-500 rounded p-2 text-xs text-slate-200" placeholder="Ej: Universitarios que viven solos">
+                                </div>
+                                <div>
+                                    <label class="block text-[10px] text-slate-400 mb-1 uppercase font-semibold">¿Qué dolor o necesidad solucionas?</label>
+                                    <input id="workshop-pain" type="text" oninput="updateConceptPitch()" class="w-full bg-navy-900 border border-slate-800 focus:border-gold-500 rounded p-2 text-xs text-slate-200" placeholder="Ej: No tienen tiempo para preparar alimentos sanos">
+                                </div>
+                                <div>
+                                    <label class="block text-[10px] text-slate-400 mb-1 uppercase font-semibold">¿Cuál es tu propuesta y qué te diferencia?</label>
+                                    <textarea id="workshop-solution" oninput="updateConceptPitch()" rows="2" class="w-full bg-navy-900 border border-slate-800 focus:border-gold-500 rounded p-2 text-xs text-slate-200" placeholder="Ej: Menús saludables pre-cocidos en suscripción de bajo costo"></textarea>
+                                </div>
+                            </div>
+                        </div>
+                        
+                        <div class="bg-navy-900 p-3 rounded-lg border border-gold-500/10 mt-3">
+                            <p class="text-[10px] text-gold-400 uppercase font-bold mb-1">Tu Declaración de Negocio:</p>
+                            <p id="workshop-pitch-result" class="text-xs italic text-slate-400 leading-relaxed">
+                                "Completa los campos para generar la estructura básica de tu propuesta..."
+                            </p>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Botones de Acción -->
+                <div class="flex flex-col sm:flex-row justify-between items-center gap-4 mt-6 pt-4 border-t border-slate-800">
+                    <button type="button" onclick="goToStep(3)" class="bg-navy-800 hover:bg-navy-700 text-slate-300 font-bold py-2.5 px-5 rounded-lg text-xs transition duration-200 w-full sm:w-auto">
+                        <i class="fa-solid fa-arrow-left mr-1"></i> Atrás
+                    </button>
+                    
+                    <!-- Botón Modificado: Exportación a HTML autónomo -->
+                    <button type="button" onclick="exportToHTML()" class="bg-gradient-to-r from-emerald-500 to-emerald-600 hover:from-emerald-600 hover:to-emerald-700 text-navy-950 font-extrabold py-3.5 px-6 rounded-xl text-xs transition duration-200 flex items-center justify-center gap-2 shadow-lg shadow-emerald-500/15 w-full sm:w-auto uppercase tracking-wide">
+                        <i class="fa-solid fa-file-code text-sm"></i> Descargar Reporte de Respuestas (HTML)
+                    </button>
+                </div>
+            </div>
+        </section>
+
+    </main>
+
+    <!-- Footer General -->
+    <footer class="bg-navy-950 border-t border-slate-900 py-4 px-6 text-center text-xs text-slate-500">
+        <div class="max-w-7xl mx-auto flex flex-col md:flex-row justify-between items-center gap-2">
+            <p>&copy; 2026 ABC Training. Todos los derechos reservados.</p>
+            <p>Dirigido por <strong class="text-gold-500">Lic. Victor Elias Sellis Zeballos</strong></p>
+        </div>
+    </footer>
+
+    <script>
+        // Variables de Estado Global
+        let studentName = "";
+        let studentLastName = "";
+        const brainstormedIdeas = [];
+        
+        const categoriesMap = [
+            "Megatendencias", "Megatendencias",
+            "Habilidades", "Habilidades",
+            "Puntos de Dolor", "Puntos de Dolor",
+            "Optimización", "Optimización",
+            "Libre Elección", "Libre Elección", "Libre Elección", "Libre Elección"
+        ];
+
+        // Estado del Macrofiltro (12 propuestas, 4 preguntas binarias. SÍ = true por defecto)
+        const macrofilterData = Array.from({length: 12}, () => [true, true, true, true]);
+        
+        // Estado del Microfiltro
+        const microfilterScores = {}; // Key: Idea ID, Value: Array de 5 calificaciones (1-5)
+        const microWeights = [0.20, 0.20, 0.25, 0.15, 0.20]; // Pesos ponderados
+        let finalWinner = { id: -1, name: "Ninguna", score: 0 };
+
+        // Navegación de Pasos
+        function goToStep(stepNumber) {
+            if (stepNumber === 1) {
+                // Validación de datos personales
+                const nameInput = document.getElementById('student-name').value.trim();
+                const lastNameInput = document.getElementById('student-lastname').value.trim();
+                
+                if (!nameInput || !lastNameInput) {
+                    document.getElementById('welcome-error').classList.remove('hidden');
+                    return;
+                }
+                
+                studentName = nameInput;
+                studentLastName = lastNameInput;
+                document.getElementById('welcome-error').classList.add('hidden');
+                
+                // Actualizar nombres en encabezados
+                document.getElementById('header-student-name').textContent = `${studentName} ${studentLastName}`;
+            }
+
+            if (stepNumber === 2) {
+                // Validación de lluvia de ideas (mínimo 5 registradas)
+                const inputs = document.querySelectorAll('.brain-input');
+                let count = 0;
+                brainstormedIdeas.length = 0; 
+                
+                inputs.forEach((input, index) => {
+                    const val = input.value.trim();
+                    if (val) {
+                        count++;
+                        brainstormedIdeas.push({
+                            id: index,
+                            text: val,
+                            category: categoriesMap[index]
+                        });
+                    }
+                });
+
+                if (count < 5) {
+                    document.getElementById('brainstorm-error').classList.remove('hidden');
+                    return;
+                }
+                
+                document.getElementById('brainstorm-error').classList.add('hidden');
+                renderMacrofiltro();
+            }
+
+            if (stepNumber === 3) {
+                // Validación: al menos una idea debe pasar el filtro
+                const passed = getPassedIdeas();
+                if (passed.length === 0) {
+                    document.getElementById('macrofilter-error').classList.remove('hidden');
+                    return;
+                }
+                document.getElementById('macrofilter-error').classList.add('hidden');
+                renderMicrofiltro(passed);
+            }
+
+            if (stepNumber === 4) {
+                // Evaluación final
+                const passed = getPassedIdeas();
+                calculateMicroWinner(passed);
+            }
+
+            // Transiciones visuales de paneles
+            document.querySelectorAll('.step-panel').forEach(panel => panel.classList.remove('active'));
+            document.getElementById(`panel-${stepNumber}`).classList.add('active');
+
+            updateStepperGraphics(stepNumber);
+        }
+
+        function updateStepperGraphics(activeStep) {
+            for (let i = 0; i <= 4; i++) {
+                const dot = document.getElementById(`dot-${i}`);
+                const line = document.getElementById(`line-${i}`);
+                
+                if (i <= activeStep) {
+                    dot.className = "step-dot w-8 h-8 rounded-full flex items-center justify-center bg-gold-500 text-navy-950 font-bold shadow-lg shadow-gold-500/20";
+                    if (line) line.className = "w-8 h-[2px] bg-gold-500";
+                } else {
+                    dot.className = "step-dot w-8 h-8 rounded-full flex items-center justify-center bg-navy-800 text-slate-500";
+                    if (line) line.className = "w-8 h-[2px] bg-slate-800";
+                }
+            }
+        }
+
+        // Ordenamiento y jerarquización de ideas según SÍ acumulados
+        function getRankedMacroIdeas() {
+            const ranked = brainstormedIdeas.map(idea => {
+                const state = macrofilterData[idea.id];
+                const siCount = state.filter(q => q === true).length;
+                return {
+                    ...idea,
+                    siCount: siCount
+                };
+            });
+            ranked.sort((a, b) => b.siCount - a.siCount || a.id - b.id);
+            return ranked;
+        }
+
+        function getPassedIdeas() {
+            const ranked = getRankedMacroIdeas();
+            return ranked.slice(0, 5); // Pasan exactamente las mejores 5
+        }
+
+        function renderMacrofiltro() {
+            const tbody = document.getElementById('macrofilter-tbody');
+            tbody.innerHTML = '';
+            const ranked = getRankedMacroIdeas();
+
+            brainstormedIdeas.forEach(idea => {
+                const state = macrofilterData[idea.id];
+                const rankIdx = ranked.findIndex(item => item.id === idea.id);
+                const passed = rankIdx !== -1 && rankIdx < 5;
+                const score = ranked.find(item => item.id === idea.id)?.siCount || 0;
+
+                const verdict = passed ? `PASA (Top ${rankIdx + 1} - ${score}/4 SÍ)` : `DESCARTADA (${score}/4 SÍ)`;
+                const verdictClass = passed ? 'bg-emerald-500/20 text-emerald-400 border border-emerald-500/30' : 'bg-rose-500/20 text-rose-400 border border-rose-500/30';
+
+                const tr = document.createElement('tr');
+                tr.innerHTML = `
+                    <td class="p-4 font-semibold text-xs md:text-sm">
+                        <span class="text-gold-500 text-[10px] uppercase tracking-wide block mb-0.5 font-sans">${idea.category}</span>
+                        ${idea.text}
+                    </td>
+                    ${[0, 1, 2, 3].map(qIdx => `
+                        <td class="p-4 text-center">
+                            <button type="button" onclick="toggleMacroState(${idea.id}, ${qIdx})" 
+                                    class="macro-btn px-3 py-1.5 rounded-lg text-xs font-bold w-12 transition duration-150 border ${
+                                        state[qIdx] 
+                                        ? 'bg-emerald-500/20 text-emerald-400 border-emerald-500/30' 
+                                        : 'bg-rose-500/20 text-rose-400 border-rose-500/30'
+                                    }">
+                                ${state[qIdx] ? 'SÍ' : 'NO'}
+                            </button>
+                        </td>
+                    `).join('')}
+                    <td class="p-4 text-center">
+                        <span id="verdict-badge-${idea.id}" class="px-2 py-1 rounded text-[10px] font-bold uppercase tracking-wider ${verdictClass}">
+                            ${verdict}
+                        </span>
+                    </td>
+                `;
+                tbody.appendChild(tr);
+            });
+        }
+
+        // Alterna respuestas del Macrofiltro y recalcula la clasificación instantáneamente
+        function toggleMacroState(ideaId, qIdx) {
+            macrofilterData[ideaId][qIdx] = !macrofilterData[ideaId][qIdx];
+            
+            const brainstormIdx = brainstormedIdeas.findIndex(i => i.id === ideaId);
+            if (brainstormIdx !== -1) {
+                const row = document.querySelectorAll('#macrofilter-tbody tr')[brainstormIdx];
+                if (row) {
+                    const btns = row.querySelectorAll('.macro-btn');
+                    const state = macrofilterData[ideaId][qIdx];
+                    btns[qIdx].className = `macro-btn px-3 py-1.5 rounded-lg text-xs font-bold w-12 transition duration-150 border ${
+                        state ? 'bg-emerald-500/20 text-emerald-400 border-emerald-500/30' : 'bg-rose-500/20 text-rose-400 border-rose-500/30'
+                    }`;
+                    btns[qIdx].textContent = state ? 'SÍ' : 'NO';
+                }
+            }
+
+            const ranked = getRankedMacroIdeas();
+            brainstormedIdeas.forEach(idea => {
+                const badge = document.getElementById(`verdict-badge-${idea.id}`);
+                if (badge) {
+                    const rankIdx = ranked.findIndex(item => item.id === idea.id);
+                    const passed = rankIdx !== -1 && rankIdx < 5;
+                    const score = ranked.find(item => item.id === idea.id)?.siCount || 0;
+
+                    if (passed) {
+                        badge.className = 'px-2 py-1 rounded text-[10px] font-bold uppercase tracking-wider bg-emerald-500/20 text-emerald-400 border border-emerald-500/30';
+                        badge.textContent = `PASA (Top ${rankIdx + 1} - ${score}/4 SÍ)`;
+                    } else {
+                        badge.className = 'px-2 py-1 rounded text-[10px] font-bold uppercase tracking-wider bg-rose-500/20 text-rose-400 border border-rose-500/30';
+                        badge.textContent = `DESCARTADA (${score}/4 SÍ)`;
+                    }
+                }
+            });
+        }
+
+        function renderMicrofiltro(passedIdeas) {
+            const limit = 5;
+            const finalPassed = passedIdeas.slice(0, limit);
+
+            // Reseteo inicial de visibilidad en columnas del microfiltro
+            for (let i = 0; i < 5; i++) {
+                document.getElementById(`micro-header-${i}`).style.display = 'none';
+                document.getElementById(`total-score-${i}`).style.display = 'none';
+                for (let cIdx = 0; cIdx < 5; cIdx++) {
+                    const cell = document.getElementById(`cell-${cIdx}-${i}`);
+                    cell.innerHTML = '';
+                    cell.style.display = 'none';
+                }
+            }
+
+            // Inserción de selects interactivos para ponderar de 1 a 5
+            finalPassed.forEach((idea, index) => {
+                const header = document.getElementById(`micro-header-${index}`);
+                header.style.display = '';
+                header.innerHTML = `
+                    <span class="text-[9px] uppercase text-gold-400 font-sans tracking-widest block font-bold">Idea Finalista ${index+1}</span>
+                    <span class="text-xs font-semibold block text-white truncate max-w-[120px] mx-auto mt-0.5" title="${idea.text}">${idea.text}</span>
+                `;
+
+                document.getElementById(`total-score-${index}`).style.display = '';
+
+                if (!microfilterScores[idea.id]) {
+                    microfilterScores[idea.id] = [3, 3, 3, 3, 3]; // Valor 3/5 inicial
+                }
+
+                for (let cIdx = 0; cIdx < 5; cIdx++) {
+                    const cell = document.getElementById(`cell-${cIdx}-${index}`);
+                    cell.style.display = '';
+                    
+                    const select = document.createElement('select');
+                    select.className = 'bg-navy-950 border border-slate-800 text-xs text-slate-200 rounded p-1.5 focus:border-gold-500';
+                    select.innerHTML = `
+                        <option value="1">1</option>
+                        <option value="2">2</option>
+                        <option value="3" ${microfilterScores[idea.id][cIdx] === 3 ? 'selected' : ''}>3</option>
+                        <option value="4" ${microfilterScores[idea.id][cIdx] === 4 ? 'selected' : ''}>4</option>
+                        <option value="5" ${microfilterScores[idea.id][cIdx] === 5 ? 'selected' : ''}>5</option>
+                    `;
+                    select.addEventListener('change', (e) => {
+                        microfilterScores[idea.id][cIdx] = parseInt(e.target.value);
+                        calculateAllMicrototals(finalPassed);
+                    });
+                    
+                    cell.appendChild(select);
+                }
+            });
+
+            calculateAllMicrototals(finalPassed);
+        }
+
+        function calculateAllMicrototals(finalPassed) {
+            let topIdx = -1;
+            let maxScore = -1;
+
+            finalPassed.forEach((idea, index) => {
+                const scores = microfilterScores[idea.id];
+                let total = 0;
+                for (let cIdx = 0; cIdx < 5; cIdx++) {
+                    total += scores[cIdx] * microWeights[cIdx];
+                }
+
+                const scoreBox = document.getElementById(`total-score-${index}`);
+                scoreBox.textContent = total.toFixed(2);
+
+                if (total > maxScore) {
+                    maxScore = total;
+                    topIdx = index;
+                }
+            });
+
+            // Resaltado visual para la idea con mayor calificación en tiempo real
+            finalPassed.forEach((idea, index) => {
+                const scoreBox = document.getElementById(`total-score-${index}`);
+                if (index === topIdx && maxScore > 0) {
+                    scoreBox.className = "p-3 text-center bg-gold-500/10 text-emerald-400 font-extrabold text-base border-2 border-emerald-500/30 rounded";
+                    scoreBox.innerHTML = `${maxScore.toFixed(2)} <span class="text-[9px] block text-gold-400 uppercase font-bold"><i class="fa-solid fa-trophy mr-0.5"></i>Ganadora</span>`;
+                } else {
+                    scoreBox.className = "p-3 text-center bg-transparent text-slate-300 font-bold text-base";
+                }
+            });
+        }
+
+        function calculateMicroWinner(passedIdeas) {
+            const limit = 5;
+            const finalPassed = passedIdeas.slice(0, limit);
+            
+            let bestIdea = null;
+            let bestScore = -1;
+
+            finalPassed.forEach((idea, index) => {
+                const scores = microfilterScores[idea.id];
+                let total = 0;
+                for (let cIdx = 0; cIdx < 5; cIdx++) {
+                    total += scores[cIdx] * microWeights[cIdx];
+                }
+
+                if (total > bestScore) {
+                    bestScore = total;
+                    bestIdea = idea;
+                }
+            });
+
+            if (bestIdea) {
+                finalWinner = {
+                    id: bestIdea.id,
+                    name: bestIdea.text,
+                    score: bestScore.toFixed(2)
+                };
+                
+                document.getElementById('winner-title-label').textContent = `"${finalWinner.name}"`;
+                document.getElementById('winner-subtitle-score').innerHTML = `Puntuación Ponderada: <strong class="text-gold-400">${finalWinner.score} / 5.00</strong>`;
+            } else {
+                document.getElementById('winner-title-label').textContent = "Ninguna idea calificada.";
+                document.getElementById('winner-subtitle-score').textContent = "Puntuación Ponderada: 0.00";
+            }
+
+            updateConceptPitch();
+        }
+
+        function updateConceptPitch() {
+            const target = document.getElementById('workshop-target').value.trim();
+            const pain = document.getElementById('workshop-pain').value.trim();
+            const solution = document.getElementById('workshop-solution').value.trim();
+            const resultLabel = document.getElementById('workshop-pitch-result');
+
+            if (!target && !pain && !solution) {
+                resultLabel.innerHTML = `"Completa los campos para generar la estructura básica de tu propuesta..."`;
+                return;
+            }
+
+            const outTarget = target || '[Público Objetivo]';
+            const outPain = pain || '[Dolor / Problema]';
+            const outSolution = solution || '[Solución & Diferencial]';
+
+            resultLabel.innerHTML = `Para <strong>${outTarget}</strong> que sufren de <strong>${outPain}</strong>, ofrecemos <strong>"${finalWinner.name}"</strong>, la cual se destaca por <strong>${outSolution}</strong> de forma rentable y viable.`;
+        }
+
+        // ================= FUNCIÓN DE EXPORTACIÓN MODIFICADA =================
+        // Esta función genera y descarga dinámicamente un archivo HTML estático e interactivo con un diseño estético y premium.
+        function exportToHTML() {
+            const target = document.getElementById('workshop-target').value.trim() || '[Público Objetivo]';
+            const pain = document.getElementById('workshop-pain').value.trim() || '[Dolor / Problema]';
+            const solution = document.getElementById('workshop-solution').value.trim() || '[Solución & Diferencial]';
+            const currentDate = new Date().toLocaleDateString('es-ES', { weekday: 'long', year: 'numeric', month: 'long', day: 'numeric' });
+
+            // 1. Generación de lista visual de Lluvia de Ideas
+            let brainstormHtml = '';
+            brainstormedIdeas.forEach((idea, idx) => {
+                brainstormHtml += `
+                <div class="bg-navy-900 border border-slate-800 rounded-xl p-4 flex flex-col justify-between">
+                    <div>
+                        <span class="text-xs font-bold uppercase tracking-widest text-gold-400 block mb-1">${idea.category}</span>
+                        <p class="text-sm font-semibold text-white">${idea.text}</p>
+                    </div>
+                    <div class="mt-4 flex items-center justify-between text-[11px] text-slate-400 border-t border-slate-800/50 pt-2">
+                        <span>Idea N° ${idx + 1}</span>
+                        <span class="bg-gold-500/10 text-gold-400 font-semibold px-2 py-0.5 rounded border border-gold-500/20">Fase Creativa</span>
+                    </div>
+                </div>`;
+            });
+
+            // 2. Generación de las filas del Macrofiltro
+            let macroRowsHtml = '';
+            const ranked = getRankedMacroIdeas();
+            brainstormedIdeas.forEach(idea => {
+                const state = macrofilterData[idea.id];
+                const rankIdx = ranked.findIndex(item => item.id === idea.id);
+                const passed = rankIdx !== -1 && rankIdx < 5;
+                const score = ranked.find(item => item.id === idea.id)?.siCount || 0;
+
+                const verdictClass = passed ? 'bg-emerald-500/10 text-emerald-400 border-emerald-500/20' : 'bg-rose-500/10 text-rose-400 border-rose-500/20';
+                const verdictText = passed ? `PASA (Top ${rankIdx + 1})` : 'DESCARTADA';
+
+                macroRowsHtml += `
+                <tr class="border-b border-slate-800 hover:bg-navy-900/30 transition duration-150">
+                    <td class="p-4">
+                        <span class="text-gold-500 text-[10px] uppercase font-bold tracking-wider block">${idea.category}</span>
+                        <span class="text-sm font-medium text-slate-100">${idea.text}</span>
+                    </td>
+                    <td class="p-4 text-center font-bold ${state[0] ? 'text-emerald-400' : 'text-rose-400'}">${state[0] ? 'SÍ' : 'NO'}</td>
+                    <td class="p-4 text-center font-bold ${state[1] ? 'text-emerald-400' : 'text-rose-400'}">${state[1] ? 'SÍ' : 'NO'}</td>
+                    <td class="p-4 text-center font-bold ${state[2] ? 'text-emerald-400' : 'text-rose-400'}">${state[2] ? 'SÍ' : 'NO'}</td>
+                    <td class="p-4 text-center font-bold ${state[3] ? 'text-emerald-400' : 'text-rose-400'}">${state[3] ? 'SÍ' : 'NO'}</td>
+                    <td class="p-4 text-center">
+                        <span class="px-2.5 py-1 rounded text-xs font-bold uppercase tracking-wider border ${verdictClass}">
+                            ${verdictText} (${score}/4)
+                        </span>
+                    </td>
+                </tr>`;
+            });
+
+            // 3. Generación de columnas y celdas de la Matriz del Microfiltro
+            const passedIdeas = getPassedIdeas().slice(0, 5);
+            let microHeadersHtml = '';
+            let microRowsHtml = '';
+
+            passedIdeas.forEach((idea, index) => {
+                microHeadersHtml += `
+                <th class="p-4 text-center font-bold bg-navy-900/40 w-[11%]">
+                    <span class="text-[9px] uppercase text-gold-400 tracking-widest block font-bold">Finalista ${index + 1}</span>
+                    <span class="text-xs font-semibold block text-white truncate max-w-[120px] mx-auto mt-0.5">${idea.text}</span>
+                </th>`;
+            });
+
+            const criterionNames = [
+                "1. Nivel de innovación y diferenciación real en el mercado (20%)",
+                "2. Know-how y competencias críticas del equipo fundador (20%)",
+                "3. Facilidad de acceso y captación de clientes potenciales (25%)",
+                "4. Baja inversión requerida para el capital inicial (15%)",
+                "5. Escalabilidad comercial y potencial de crecimiento (20%)"
+            ];
+
+            for (let cIdx = 0; cIdx < 5; cIdx++) {
+                microRowsHtml += `
+                <tr class="border-b border-slate-800">
+                    <td class="p-4 text-sm font-medium text-slate-300">${criterionNames[cIdx]}</td>
+                    ${passedIdeas.map((idea) => {
+                        const score = microfilterScores[idea.id][cIdx];
+                        return `<td class="p-4 text-center text-sm font-semibold text-slate-100">${score}</td>`;
+                    }).join('')}
+                </tr>`;
+            }
+
+            // Cálculo final ponderado en reporte
+            let topIdx = -1;
+            let maxScore = -1;
+            const computedTotals = passedIdeas.map((idea, index) => {
+                const scores = microfilterScores[idea.id];
+                let total = 0;
+                for (let cIdx = 0; cIdx < 5; cIdx++) {
+                    total += scores[cIdx] * microWeights[cIdx];
+                }
+                if (total > maxScore) {
+                    maxScore = total;
+                    topIdx = index;
+                }
+                return total;
+            });
+
+            microRowsHtml += `
+            <tr class="bg-navy-900/60 font-bold text-slate-200">
+                <td class="p-4 text-sm text-gold-400">PUNTUACIÓN FINAL PONDERADA:</td>
+                ${passedIdeas.map((idea, index) => {
+                    const total = computedTotals[index];
+                    const isWinner = index === topIdx;
+                    const highlightClass = isWinner ? 'bg-gold-500/10 text-emerald-400 border-2 border-emerald-500/30 font-extrabold' : '';
+                    return `
+                    <td class="p-4 text-center text-base ${highlightClass}">
+                        ${total.toFixed(2)}
+                        ${isWinner ? '<span class="text-[9px] block text-gold-400 uppercase font-bold"><i class="fa-solid fa-trophy mr-0.5"></i>Ganadora</span>' : ''}
+                    </td>`;
+                }).join('')}
+            </tr>`;
+
+            // Plantilla Maestra del Reporte HTML de Salida
+            const htmlContent = `<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Reporte de Respuestas Taller Plan de Negocios - ${studentName} ${studentLastName}</title>
+    <script src="https://cdn.tailwindcss.com"><\/script>
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700;800&family=Playfair+Display:ital,wght@0,600;0,700;1,400&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    <script>
+        tailwind.config = {
+            theme: {
+                extend: {
+                    colors: {
+                        navy: {
+                            50: '#f4f6f9',
+                            100: '#e8ecf3',
+                            800: '#0f1e36',
+                            900: '#0b0f19',
+                            950: '#05070c',
+                        },
+                        gold: {
+                            300: '#dfc59f',
+                            400: '#d4af37',
+                            500: '#c5a880',
+                            600: '#91713b',
+                        }
+                    },
+                    fontFamily: {
+                        sans: ['Inter', 'sans-serif'],
+                        serif: ['Playfair Display', 'serif'],
+                    }
+                }
+            }
+        }
+    <\/script>
+</head>
+<body class="bg-navy-950 text-slate-200 font-sans min-h-screen py-10 px-4 md:px-8">
+    <div class="max-w-6xl mx-auto space-y-10">
+        
+        <!-- Encabezado Corporativo/Académico -->
+        <header class="bg-navy-900 border border-gold-500/20 rounded-2xl p-6 md:p-8 flex flex-col md:flex-row justify-between items-center gap-6 shadow-2xl relative overflow-hidden">
+            <div class="absolute top-0 right-0 w-32 h-32 bg-gold-500/5 rounded-full blur-2xl"></div>
+            <div class="flex items-center gap-4">
+                <div class="bg-gradient-to-br from-gold-400 to-gold-600 p-3 rounded-xl text-navy-950">
+                    <i class="fa-solid fa-graduation-cap text-2xl"></i>
+                </div>
+                <div>
+                    <h1 class="font-serif text-2xl md:text-3xl font-bold tracking-wide text-white">ABC Training</h1>
+                    <p class="text-xs uppercase tracking-wider text-gold-400 font-semibold">Cátedra de Plan de Negocios</p>
+                </div>
+            </div>
+            <div class="text-center md:text-right border-t md:border-t-0 md:border-l border-slate-800/80 pt-4 md:pt-0 md:pl-8">
+                <p class="text-[11px] text-slate-400 uppercase tracking-widest font-semibold">Director de Cátedra</p>
+                <p class="text-sm font-bold text-slate-200">Lic. Victor Elias Sellis Zeballos</p>
+                <p class="text-xs text-gold-400 mt-1 font-medium">${currentDate}</p>
+            </div>
+        </header>
+
+        <!-- Sección de Metadatos del Estudiante -->
+        <div class="bg-navy-900 border border-slate-800 rounded-2xl p-6 shadow-xl grid grid-cols-1 md:grid-cols-2 gap-6">
+            <div class="border-b md:border-b-0 md:border-r border-slate-800/80 pb-4 md:pb-0 md:pr-6">
+                <span class="text-xs font-bold text-gold-400 uppercase tracking-wider block mb-1">Estudiante Evaluador</span>
+                <p class="text-xl font-bold text-white">${studentName} ${studentLastName}</p>
+            </div>
+            <div>
+                <span class="text-xs font-bold text-gold-400 uppercase tracking-wider block mb-1">Taller Realizado</span>
+                <p class="text-xl font-bold text-white">Identificación y Selección de Ideas de Negocio</p>
+            </div>
+        </div>
+
+        <!-- Sección 1: Lluvia de Ideas -->
+        <section class="bg-navy-900 border border-slate-800/80 rounded-2xl p-6 md:p-8 shadow-xl">
+            <div class="mb-6 border-b border-slate-800 pb-4">
+                <span class="text-xs font-bold text-gold-400 uppercase tracking-wider block mb-1">Fase 1</span>
+                <h2 class="font-serif text-2xl font-bold text-white">Lluvia de Ideas Registradas</h2>
+                <p class="text-xs text-slate-400 mt-0.5">Propuestas originales planteadas según sugerencias metodológicas.</p>
+            </div>
+            <div class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-4">
+                ${brainstormHtml}
+            </div>
+        </section>
+
+        <!-- Sección 2: Resultados del Macrofiltro -->
+        <section class="bg-navy-900 border border-slate-800/80 rounded-2xl p-6 md:p-8 shadow-xl">
+            <div class="mb-6 border-b border-slate-800 pb-4">
+                <span class="text-xs font-bold text-gold-400 uppercase tracking-wider block mb-1">Fase 2</span>
+                <h2 class="font-serif text-2xl font-bold text-white">Resultados del Macrofiltro de Selección</h2>
+                <p class="text-xs text-slate-400 mt-0.5">Filtro de exclusión binaria. Las mejores 5 ideas finalistas pasaron a la siguiente etapa.</p>
+            </div>
+            <div class="overflow-x-auto rounded-xl border border-slate-800">
+                <table class="w-full text-left text-xs md:text-sm border-collapse bg-navy-950">
+                    <thead>
+                        <tr class="bg-navy-900/80 border-b border-slate-800 text-slate-300">
+                            <th class="p-4 font-semibold w-[35%]">Idea de Negocio</th>
+                            <th class="p-4 text-center font-semibold w-[13%]">¿Existe necesidad?</th>
+                            <th class="p-4 text-center font-semibold w-[13%]">¿Hay mercado?</th>
+                            <th class="p-4 text-center font-semibold w-[13%]">¿Saber técnico?</th>
+                            <th class="p-4 text-center font-semibold w-[13%]">¿Es legal/ético?</th>
+                            <th class="p-4 text-center font-semibold w-[13%]">Veredicto (Top 5)</th>
+                        </tr>
+                    </thead>
+                    <tbody class="divide-y divide-slate-800/60 text-slate-300">
+                        ${macroRowsHtml}
+                    </tbody>
+                </table>
+            </div>
+        </section>
+
+        <!-- Sección 3: Matriz del Microfiltro -->
+        <section class="bg-navy-900 border border-slate-800/80 rounded-2xl p-6 md:p-8 shadow-xl">
+            <div class="mb-6 border-b border-slate-800 pb-4">
+                <span class="text-xs font-bold text-gold-400 uppercase tracking-wider block mb-1">Fase 3</span>
+                <h2 class="font-serif text-2xl font-bold text-white">Matriz del Microfiltro (Evaluación Cualitativa)</h2>
+                <p class="text-xs text-slate-400 mt-0.5">Ponderación del 1 al 5 en base a variables críticas de éxito comercial y viabilidad.</p>
+            </div>
+            <div class="overflow-x-auto rounded-xl border border-slate-800">
+                <table class="w-full text-left text-xs md:text-sm border-collapse bg-navy-950">
+                    <thead>
+                        <tr class="bg-navy-900/80 border-b border-slate-800 text-slate-300">
+                            <th class="p-4 font-semibold w-[45%]">Criterios Clave de Éxito</th>
+                            ${microHeadersHtml}
+                        </tr>
+                    </thead>
+                    <tbody class="divide-y divide-slate-800/60 text-slate-300">
+                        ${microRowsHtml}
+                    </tbody>
+                </table>
+            </div>
+        </section>
+
+        <!-- Sección 4: Pitch e Idea Ganadora -->
+        <section class="bg-navy-900 border border-slate-800/80 rounded-2xl p-6 md:p-8 shadow-xl relative overflow-hidden">
+            <div class="absolute -inset-1 rounded-full bg-gold-400 blur opacity-10"></div>
+            
+            <div class="mb-6 border-b border-slate-800 pb-4">
+                <span class="text-xs font-bold text-gold-400 uppercase tracking-wider block mb-1">Fase Final</span>
+                <h2 class="font-serif text-2xl font-bold text-white">Idea de Negocio de Mayor Potencial y Concepto de Negocio</h2>
+                <p class="text-xs text-slate-400 mt-0.5">Formulación estructurada de la propuesta ganadora.</p>
+            </div>
+
+            <div class="grid grid-cols-1 md:grid-cols-3 gap-6 relative">
+                <div class="bg-navy-950 border border-gold-500/20 rounded-2xl p-6 shadow-lg md:col-span-1 flex flex-col justify-center items-center text-center">
+                    <div class="bg-gold-500/10 text-gold-400 w-16 h-16 rounded-full flex items-center justify-center text-3xl border border-gold-500/20 mb-4 shadow-md shadow-gold-500/5">
+                        <i class="fa-solid fa-trophy"></i>
+                    </div>
+                    <span class="text-[10px] text-slate-400 uppercase tracking-widest font-semibold block mb-1">Propuesta Seleccionada</span>
+                    <h3 class="font-serif text-lg font-bold text-gold-400 italic mb-2">"${finalWinner.name}"</h3>
+                    <p class="text-xs uppercase tracking-wider text-slate-300 font-bold">Puntuación: <span class="text-emerald-400">${finalWinner.score} / 5.00</span></p>
+                </div>
+
+                <div class="md:col-span-2 space-y-4">
+                    <div class="bg-navy-950 border border-slate-800 rounded-2xl p-6">
+                        <span class="text-xs font-bold text-gold-400 uppercase tracking-wider block mb-3">Declaración Estructurada del Negocio (Pitch Hipotético):</span>
+                        <p class="text-sm md:text-base italic text-slate-200 leading-relaxed bg-navy-900 p-4 rounded-xl border border-slate-800/80 shadow-inner">
+                            "Para <strong class="text-white font-semibold">${target}</strong> que sufren de <strong class="text-white font-semibold">${pain}</strong>, ofrecemos <strong class="text-gold-400 font-bold">"${finalWinner.name}"</strong>, la cual se destaca por <strong class="text-white font-semibold">${solution}</strong> de forma rentable y viable."
+                        </p>
+                    </div>
+
+                    <div class="grid grid-cols-1 sm:grid-cols-3 gap-3">
+                        <div class="bg-navy-950/40 border border-slate-800 rounded-xl p-3 text-xs">
+                            <strong class="text-gold-300 block mb-1">Target de Cliente:</strong>
+                            <p class="text-slate-400">${target}</p>
+                        </div>
+                        <div class="bg-navy-950/40 border border-slate-800 rounded-xl p-3 text-xs">
+                            <strong class="text-gold-300 block mb-1">Punto de Dolor:</strong>
+                            <p class="text-slate-400">${pain}</p>
+                        </div>
+                        <div class="bg-navy-950/40 border border-slate-800 rounded-xl p-3 text-xs">
+                            <strong class="text-gold-300 block mb-1">Diferencial Clave:</strong>
+                            <p class="text-slate-400">${solution}</p>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <!-- Pie de Página -->
+        <footer class="text-center text-xs text-slate-500 pt-6 border-t border-slate-900">
+            <p>&copy; 2026 ABC Training. Todos los derechos reservados. | Cátedra de Plan de Negocios</p>
+            <p class="mt-1">Reporte exportado como archivo HTML interactivo autónomo.</p>
+        </footer>
+    </div>
+</body>
+</html>`;
+
+            // Construcción del Blob HTML para su descarga local inmediata
+            const blob = new Blob([htmlContent], { type: 'text/html;charset=utf-8;' });
+            const link = document.createElement("a");
+            const url = URL.createObjectURL(blob);
+            link.setAttribute("href", url);
+            link.setAttribute("download", `Taller_Plan_de_Negocios_${studentName}_${studentLastName}.html`);
+            link.style.visibility = 'hidden';
+            document.body.appendChild(link);
+            link.click();
+            document.body.removeChild(link);
+        }
+    </script>
+</body>
+</html>
